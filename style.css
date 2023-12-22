@@ -1,0 +1,353 @@
+body {
+    margin: 0;
+    font-weight: 400;
+    background-color: #EDEDED;
+    font-family: "Manrope";
+}
+
+header {
+    background: linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30)), url("../Photos\ P7\ JS\ Les\ petits\ plats/header-img.jpg");
+    width: 100%;
+    height: 100vh;
+    background-size: 100%;
+    background-position: bottom;
+    font-family: "Anton";
+}
+
+.logo {
+    display: flex;
+    margin-left: 70px;
+    color: white;
+    margin-top: 0;
+    padding-top: 30px;
+}
+
+h3 {
+    font-family: "Anton";
+    font-size: 18px;
+    width: 100%;
+}
+
+h4 {
+    font-size: 12px;
+    color: #7A7A7A;
+    width: 100%;
+}
+
+.text_content {
+    font-size: 14px;
+}
+
+.title {
+    display: flex;
+    flex-wrap: wrap;
+    color: #FFD15B;
+    font-size: 44px;
+    width: 750px;
+    text-align: center;
+    margin-top: 230px;
+    margin-left: 30%;
+}
+
+.search_area {
+    display: flex;
+    width: 100%;
+}
+
+.search_bar {
+    display: flex;
+    width: 800px;
+    height: 72px;
+    border-radius: 11px;
+    border: none;
+    color: #7A7A7A;
+    font-family: Manrope;
+    font-size: 16px;
+    padding-left: 25px;
+    margin-left: 24%;
+    margin-right: 0;
+}
+
+.search_btn {
+    border-radius: 11px;
+    background-color: black;
+    border: none;
+    height: 50px;
+    width: 50px;
+    margin-top: 13px;
+}
+
+.search_btn .fa-magnifying-glass {
+    font-size: 20px;
+}
+
+.filtres {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: space-evenly;
+    position: relative;
+    padding: 0px 135px;
+}
+
+.hidden {
+    display: none;
+}
+
+.hover:hover {
+    cursor: pointer;
+}
+
+.filter_top {
+    padding: 17px 16px;
+    border: 11px;
+    position: relative;
+}
+
+.filter_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 11px;
+    padding: 17px 16px;
+    gap: 63px;
+    font-size: 16px;
+}
+
+.open{
+    border-radius: 11px 11px 0px 0px;
+}
+
+.pull_down {
+    border: none;
+    background-color: white;
+}
+
+.appareils {
+    position: relative;
+}
+
+.search_design {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+    width: 100%;
+    padding: 3px;
+}
+
+.appareils_search {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border: solid 1px #C6C6C6;
+    width: 80%;
+    height: 36px;
+}
+
+.ingredients_search {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border: solid 1px #C6C6C6;
+    width: 80%;
+    height: 36px;
+}
+
+.ustensils_search {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border: solid 1px #C6C6C6;
+    width: 80%;
+    height: 36px;
+}
+
+.clear {
+    position: absolute;
+    right: 50px;
+    border: none;
+    background-color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.fa-xmark {
+    font-size: 15px;
+    color: #C6C6C6;
+}
+
+.search_appareils {
+    right: 25px;
+    border: none;
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 25px;
+}
+
+.search_ingredients {
+    right: 25px;
+    border: none;
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 25px;
+}
+
+.search_ustensils {
+    right: 25px;
+    border: none;
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 25px;
+}
+
+.fa-magnifying-glass {
+    color: grey;
+    font-size: 15px;
+}
+
+.selected {
+    background-color: #FFD15B;
+}
+
+.dropdown_menu {
+    background-color: white;
+    border-radius: 0px 0px 11px 11px;
+    position: absolute;
+    z-index: 2;
+    max-height: 170px;
+    width: 85%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    padding-bottom: 10px;
+}
+
+.ingredients_option {
+    padding: 8px 17px 8px 17px;
+    align-items: center;
+    margin-top: 2px;
+    font-size: 14px;
+}
+
+.ingredients_option:hover {
+    cursor: pointer;
+}
+
+.appliances_option {
+    padding: 8px 17px 8px 17px;
+    align-items: center;
+    margin-top: 2px;
+    font-size: 14px;
+}
+
+.appliances_option:hover {
+    cursor: pointer;
+}
+
+.ustensils_option {
+    padding: 8px 17px 8px 17px;
+    align-items: center;
+    margin-top: 2px;
+    font-size: 14px;
+}
+
+.ustensils_option:hover {
+    cursor: pointer;
+}
+
+.search_filters {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    margin-left: 190px;
+    flex-direction: row;
+}
+
+.filter_tag {
+    display: flex;
+    max-width: 167px;
+    padding: 17px 18px;
+    border-radius:  10px;
+    gap: 30px;
+    align-items: center;
+    background-color: #FFD15B;
+}
+
+.recipesSection {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    width: 380px;
+    border: none;
+    border-radius: 21px;
+    flex-direction: column;
+    margin: 50px;
+    background-color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.coverfit {
+    width: 100%;
+    height: 253px;
+    object-fit: cover;
+}
+
+.time {
+    background-color: #FFD15B;
+    width: 40px;
+    height: 16px;
+    padding: 5px 15px;
+    border-radius: 14px;
+    font-size: 12px;
+    position: absolute;
+    top: 21px;
+    left: 295px;
+}
+
+.text_block {
+    padding: 25px;
+}
+
+.recipe_section {
+    padding-top: 5px;
+}
+
+.recipe_description {
+    width: 310px;
+    height: 76px;
+    overflow: hidden;
+}
+
+.ingredient_section {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.ingredient {
+    font-weight: 500;
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+.quantity {
+    color: #7A7A7A;
+    font-weight: 400;
+}
