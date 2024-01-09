@@ -16,7 +16,10 @@ const dropDown3 = document.querySelector(".ustensils_area");
 const dropDownIcon3 = document.getElementById("pull_down_3");
 const chevron3 = document.querySelector("#pull_down_3 .fa-chevron-down");
 const ustensilesTitle = document.getElementById("ustensils_title");
-
+let tagArray = [];
+let recipeFiltered = recipeList;
+let nbRecipes = document.getElementById("nb_tot");
+nbRecipes.innerText = recipeFiltered.length;
 
 // Top search filter
 async function searchFilter(value) {
@@ -34,46 +37,56 @@ async function searchFilter(value) {
     recipesCreation(filteredCards);
 }
 
-async function clearList() {
-    recipesSection.innerHTML = '';
-    recipesCreation(recipeList);
-}
-
-async function searchAppliance(value) {
-    const filteredCards = recipeList.filter(recipe => {
-        return (recipe.appliance === value);
-    });
-
-    recipesSection.innerHTML = '';
-    recipesCreation(filteredCards);
-}
-
-async function searchIngredient(value) {
-    const filteredCards = recipeList.filter(recipe => {
-        var isInIngredients = recipe.ingredients.some(function(ingredient) {
-            return ingredient.ingredient.toLowerCase().includes(value);
-        });
-
-        return (isInIngredients === value);
-    });
-}
-
-async function searchUstensil(value) {
-    const filteredCards = recipeList.filter(recipe => {
-        const results = [...recipe.ustensils];
-        return (results === value);
-    });
-
-    recipesSection.innerHTML = '';
-    recipesCreation(filteredCards);
-}
-
 inputValidation.addEventListener('submit', (event) => {
     event.preventDefault();
     const searchInput = document.getElementById('search_input');
     const value = searchInput.value.trim().toLowerCase();
     searchFilter(value);
 });
+
+// Tag filters
+async function updateRecipes() {
+    recipeFiltered = recipeList;
+    tagArray.forEach(value => {
+        const filteredCards = recipeFiltered.filter(recipe => {
+            var isInIngredients = recipe.ingredients.some(ingredient => 
+                ingredient.ingredient.toLowerCase().includes(value)
+            );
+            const results = [...recipe.ustensils];
+            return (isInIngredients || recipe.appliance.toLowerCase().includes(value)
+                    || results.includes(value));
+        });
+        recipeFiltered = filteredCards;
+    });
+    nbRecipes.innerText = recipeFiltered.length;
+    recipesSection.innerHTML = '';
+    recipesCreation(recipeFiltered);
+}
+
+async function addTagToArray(tag) {
+    var iMax = tagArray.length;
+
+    for(var i=0; i<=iMax; i++) {
+        if(tagArray[i] === tag.toLowerCase()) {
+            return 0;
+        }
+    }
+    tagArray[iMax] = tag.toLowerCase();
+    updateRecipes();
+    console.log(tagArray);
+}
+
+async function removeTagToArray(tag) {
+    var iMax = tagArray.length;
+
+    for(var i=0; i<=iMax; i++) {
+        if(tagArray[i] === tag.toLowerCase()) {
+            tagArray.splice(i, 1);
+        }
+    }
+    updateRecipes();
+    console.log(tagArray);
+}
 
 async function generateFilters() {
     //Ingredients list generation
@@ -92,32 +105,34 @@ async function generateFilters() {
             ingredientTag.classList.toggle("selected");
 
             const filterName = document.createElement('label');
-                    filterName.innerText = ingredientTag.getAttribute("data-value");
-                    filterName.classList.add("filter_tag");
+            filterName.innerText = ingredientTag.getAttribute("data-value");
+            filterName.classList.add("filter_tag");
 
-                    const crossIcon = document.createElement('i');
-                    crossIcon.classList.add('fa-solid', 'fa-xmark');
+            const crossIcon = document.createElement('i');
+            crossIcon.classList.add('fa-solid', 'fa-xmark');
 
-                    searchFilters.appendChild(filterName);
-                    filterName.appendChild(crossIcon);
+            searchFilters.appendChild(filterName);
+            filterName.appendChild(crossIcon);
+            addTagToArray(ingredientTag.getAttribute('data-value'));
 
-                    if(!ingredientTag.classList.contains("selected")) {
-                        let filterTags = document.querySelectorAll(".filter_tag");
+            if(!ingredientTag.classList.contains("selected")) {
+                let filterTags = document.querySelectorAll(".filter_tag");
 
-                        filterTags.forEach(function(tag) {
-                            if(tag.textContent == ingredientTag.getAttribute("data-value")) {
-                                tag.remove();
-                                clearList();
-                            }
-                        })
+                removeTagToArray(ingredientTag.getAttribute('data-value'));
+
+                filterTags.forEach(function(tag) {
+                    if(tag.textContent == ingredientTag.getAttribute("data-value")) {
+                        tag.remove();
                     }
+                })
+            }
 
-                    crossIcon.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        clearList();
-                        crossIcon.parentElement.remove();
-                        ingredientTag.classList.remove("selected");
-                    });
+            crossIcon.addEventListener('click', (event) => {
+                event.preventDefault();
+                crossIcon.parentElement.remove();
+                ingredientTag.classList.remove("selected");
+                removeTagToArray(ingredientTag.getAttribute('data-value'));
+            });
 
         });
     });
@@ -146,23 +161,25 @@ async function generateFilters() {
 
                     searchFilters.appendChild(filterName);
                     filterName.appendChild(crossIcon);
+                    addTagToArray(ustensilTag.getAttribute('data-value'));
 
                     if(!ustensilTag.classList.contains("selected")) {
                         let filterTags = document.querySelectorAll(".filter_tag");
 
+                        removeTagToArray(ustensilTag.getAttribute('data-value'));
+
                         filterTags.forEach(function(tag) {
                             if(tag.textContent == ustensilTag.getAttribute("data-value")) {
                                 tag.remove();
-                                clearList();
                             }
                         })
                     }
 
                     crossIcon.addEventListener('click', (event) => {
                         event.preventDefault();
-                        clearList();
                         crossIcon.parentElement.remove();
                         ustensilTag.classList.remove("selected");
+                        removeTagToArray(ustensilTag.getAttribute('data-value'));
                     });
 
         });
@@ -192,23 +209,25 @@ appliance_list.forEach(function(appliance) {
 
                 searchFilters.appendChild(filterName);
                 filterName.appendChild(crossIcon);
+                addTagToArray(applianceTag.getAttribute('data-value'));
 
                 if(!applianceTag.classList.contains("selected")) {
                     let filterTags = document.querySelectorAll(".filter_tag");
 
+                    removeTagToArray(applianceTag.getAttribute('data-value'));
+
                     filterTags.forEach(function(tag) {
                         if(tag.textContent == applianceTag.getAttribute("data-value")) {
                             tag.remove();
-                            clearList();
                         }
                     })
                 }
 
                 crossIcon.addEventListener('click', (event) => {
                     event.preventDefault();
-                    clearList();
                     crossIcon.parentElement.remove();
                     applianceTag.classList.remove("selected");
+                    removeTagToArray(applianceTag.getAttribute('data-value'));
                 });
 
     });
@@ -238,7 +257,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
         searchInput.addEventListener("input", function() {
             clearBtn.classList.remove("hidden");
             const searchTerm = searchInput.value.toLowerCase();
-
+            if(!searchInput.value){
+                clearBtn.classList.add("hidden");
+            }
+            
             options.forEach(function(option) {
                 const optionText = option.textContent.trim().toLocaleLowerCase();
                 const shouldShow = optionText.includes(searchTerm);
@@ -260,24 +282,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // Appliance filters
     const applianceArea = document.querySelectorAll(".appareils");
 
-    function updateSelectedOptionsAppliance(applianceArea) {
-        const selectedOptions = Array.from(applianceArea.querySelectorAll(".appliances_option.selected"))
-                                .map(function (option){
-                                    return {
-                                        value: option.getAttribute("data-value"),
-                                        text: option.textContent.trim()
-                                    };
-                                });
-        
-        const selectedValues = selectedOptions.map(function(option) {
-            return option.value
-        });
-
-        selectedValues.forEach(function(value) {
-            searchAppliance(value);
-        });
-    }
-
     applianceArea.forEach(function(applianceArea) {
         const searchInput = applianceArea.querySelector(".appareils_search");
         const optionsContainer = applianceArea.querySelector(".appliance_area");
@@ -297,6 +301,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         searchInput.addEventListener("input", function() {
             clearBtn.classList.remove("hidden");
             const searchTerm = searchInput.value.toLowerCase();
+            if(!searchInput.value){
+                clearBtn.classList.add("hidden");
+            }
 
             options.forEach(function(option) {
                 const optionText = option.textContent.trim().toLocaleLowerCase();
@@ -337,6 +344,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         searchInput.addEventListener("input", function() {
             clearBtn.classList.remove("hidden");
+
+            if(!searchInput.value){
+                clearBtn.classList.add("hidden");
+            }
             const searchTerm = searchInput.value.toLowerCase();
 
             options.forEach(function(option) {
@@ -358,17 +369,27 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 });
 
+// Drop down menus
 dropDownIcon1.addEventListener("click", function(event) {
     event.preventDefault();
     if(chevron1.classList.contains("fa-chevron-down")) {
         dropDown1.style.display = "block";
         chevron1.classList.replace("fa-chevron-down", "fa-chevron-up");
         ingredientsTitle.classList.add("open");
+        dropDown2.style.display = "none";
+        chevron2.classList.replace("fa-chevron-up", "fa-chevron-down");
+        appareilsTitle.classList.remove("open");
+        dropDown3.style.display = "none";
+        chevron3.classList.replace("fa-chevron-up", "fa-chevron-down");
+        ustensilesTitle.classList.remove("open");
+        document.querySelector('.appareils_search').value = '';
+        document.querySelector('.ustensils_search').value = '';
     }
     else {
         dropDown1.style.display = "none";
         chevron1.classList.replace("fa-chevron-up", "fa-chevron-down");
         ingredientsTitle.classList.remove("open");
+        document.querySelector('.ingredients_search').value = '';
     }
 });
 
@@ -378,11 +399,20 @@ dropDownIcon2.addEventListener("click", function(event) {
         dropDown2.style.display = "block";
         chevron2.classList.replace("fa-chevron-down", "fa-chevron-up");
         appareilsTitle.classList.add("open");
+        dropDown1.style.display = "none";
+        chevron1.classList.replace("fa-chevron-up", "fa-chevron-down");
+        ingredientsTitle.classList.remove("open");
+        dropDown3.style.display = "none";
+        chevron3.classList.replace("fa-chevron-up", "fa-chevron-down");
+        ustensilesTitle.classList.remove("open");
+        document.querySelector('.ingredients_search').value = '';
+        document.querySelector('.ustensils_search').value = '';
     }
     else {
         dropDown2.style.display = "none";
         chevron2.classList.replace("fa-chevron-up", "fa-chevron-down");
         appareilsTitle.classList.remove("open");
+        document.querySelector('.appareils_search').value = '';
     }
 });
 
@@ -392,10 +422,26 @@ dropDownIcon3.addEventListener("click", function(event) {
         dropDown3.style.display = "block";
         chevron3.classList.replace("fa-chevron-down", "fa-chevron-up");
         ustensilesTitle.classList.add("open");
+        dropDown2.style.display = "none";
+        chevron2.classList.replace("fa-chevron-up", "fa-chevron-down");
+        appareilsTitle.classList.remove("open");
+        dropDown1.style.display = "none";
+        chevron1.classList.replace("fa-chevron-up", "fa-chevron-down");
+        ingredientsTitle.classList.remove("open");
+        document.querySelector('.appareils_search').value = '';
+        document.querySelector('.ingredients_search').value = '';
     }
     else {
         dropDown3.style.display = "none";
         chevron3.classList.replace("fa-chevron-up", "fa-chevron-down");
         ustensilesTitle.classList.remove("open");
+        document.querySelector('.ustensils_search').value = '';
     }
 });
+
+// clear inputs
+window.onload = function() {
+    document.querySelector('.ustensils_search').value = '';
+    document.querySelector('.appareils_search').value = '';
+    document.querySelector('.ingredients_search').value = '';
+}

@@ -51,21 +51,22 @@ h4 {
 
 .search_area {
     display: flex;
-    width: 100%;
+    position: absolute;
+    left: 23%;
+    width: 954px;
+    border-radius: 11px;
+    background-color: white;
 }
 
 .search_bar {
     display: flex;
-    width: 800px;
+    width: 90%;
     height: 72px;
-    border-radius: 11px;
     border: none;
     color: #7A7A7A;
     font-family: Manrope;
     font-size: 16px;
-    padding-left: 25px;
-    margin-left: 24%;
-    margin-right: 0;
+    margin-left: 35px;
 }
 
 .search_btn {
@@ -81,6 +82,14 @@ h4 {
     font-size: 20px;
 }
 
+.infos {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .filtres {
     display: flex;
     flex-wrap: wrap;
@@ -88,6 +97,17 @@ h4 {
     justify-content: space-evenly;
     position: relative;
     padding: 0px 135px;
+}
+
+.nb_recipes {
+    display: flex;
+    width: 115px;
+    margin-right: 200px;
+    justify-content: end;
+}
+
+#nb_tot {
+    margin-right: 5px;
 }
 
 .hidden {
@@ -269,6 +289,7 @@ h4 {
     padding: 10px;
     margin-left: 190px;
     flex-direction: row;
+    width: 100%;
 }
 
 .filter_tag {

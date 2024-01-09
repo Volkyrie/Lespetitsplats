@@ -41,53 +41,56 @@
         </form>
     </header>
     <main>
-      <div id="filtres" class="filtres">
-        <div id="ingredients" class="ingredients filter_top">
-          <div id="ingredients_title" class="filter_title">
-            Ingredients
-            <button type="button" id="pull_down_1" class="pull_down hover"><i class="fa-solid fa-chevron-down hover"></i></button>
-          </div>
-          <div class="ingredients_area dropdown_menu hidden">
-            <div class="ingredients_search_area search_design">
-              <input type="text" class="ingredients_search" placeholder="" />
-              <button type="button" class="clear hover hidden"><i class="fa-solid fa-xmark hover"></i></button>
-              <button type="button" class="search_ingredients hover"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <section class="infos">
+        <div id="filtres" class="filtres">
+          <div id="ingredients" class="ingredients filter_top">
+            <div id="ingredients_title" class="filter_title">
+              Ingredients
+              <button type="button" id="pull_down_1" class="pull_down hover"><i class="fa-solid fa-chevron-down hover"></i></button>
             </div>
-            <div class="no-result hidden">Aucun résultat</div>
+            <div class="ingredients_area dropdown_menu hidden">
+              <div class="ingredients_search_area search_design">
+                <input type="text" class="ingredients_search" placeholder="" />
+                <button type="button" class="clear hover hidden"><i class="fa-solid fa-xmark hover"></i></button>
+                <button type="button" class="search_ingredients hover"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+              <div class="no-result hidden">Aucun résultat</div>
+            </div>
           </div>
-        </div>
 
-        <div id="appareils" class="appareils filter_top">
-          <div id="appareils_title" class="filter_title">
-            Appareils
-            <button type="button" id="pull_down_2" class="pull_down hover"><i class="fa-solid fa-chevron-down hover"></i></button>
-          </div>
-          <div class="appliance_area dropdown_menu hidden">
-            <div class="appareils_search_area search_design">
-              <input type="text" class="appareils_search" placeholder="" />
-              <button type="button" class="clear hover hidden"><i class="fa-solid fa-xmark hover"></i></button>
-              <button type="button" class="search_appareils hover"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <div id="appareils" class="appareils filter_top">
+            <div id="appareils_title" class="filter_title">
+              Appareils
+              <button type="button" id="pull_down_2" class="pull_down hover"><i class="fa-solid fa-chevron-down hover"></i></button>
             </div>
-            <div class="no-result hidden">Aucun résultat</div>
+            <div class="appliance_area dropdown_menu hidden">
+              <div class="appareils_search_area search_design">
+                <input type="text" class="appareils_search" placeholder="" />
+                <button type="button" class="clear hover hidden"><i class="fa-solid fa-xmark hover"></i></button>
+                <button type="button" class="search_appareils hover"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+              <div class="no-result hidden">Aucun résultat</div>
+            </div>
           </div>
-        </div>
 
-        <div id="ustensils" class="ustensils filter_top">
-          <div id="ustensils_title" class="filter_title">
-            Ustensiles
-            <button type="button" id="pull_down_3" class="pull_down hover"><i class="fa-solid fa-chevron-down hover"></i></button>
-          </div>
-          <div class="ustensils_area dropdown_menu hidden">
-            <div class="ustensils_search_area search_design">
-              <input type="text" class="ustensils_search" placeholder="" />
-              <button type="button" class="clear hover hidden"><i class="fa-solid fa-xmark hover"></i></button>
-              <button type="button" class="search_ustensils hover"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <div id="ustensils" class="ustensils filter_top">
+            <div id="ustensils_title" class="filter_title">
+              Ustensiles
+              <button type="button" id="pull_down_3" class="pull_down hover"><i class="fa-solid fa-chevron-down hover"></i></button>
             </div>
-            <div class="no-result hidden">Aucun résultat</div>
+            <div class="ustensils_area dropdown_menu hidden">
+              <div class="ustensils_search_area search_design">
+                <input type="text" class="ustensils_search" placeholder="" />
+                <button type="button" class="clear hover hidden"><i class="fa-solid fa-xmark hover"></i></button>
+                <button type="button" class="search_ustensils hover"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+              <div class="no-result hidden">Aucun résultat</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div id="search_filters" class="search_filters"></div>
+        <div class="nb_recipes"><label id="nb_tot"></label> recettes</div>
+        <div id="search_filters" class="search_filters"></div>
+      </section>
       <section id="recipes_area" class="recipesSection">
 
       </section>
