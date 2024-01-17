@@ -69,6 +69,11 @@ h4 {
     margin-left: 35px;
 }
 
+.search_bar:focus {
+    border: none;
+    outline: none;
+}
+
 .search_btn {
     border-radius: 11px;
     background-color: black;
@@ -283,6 +288,13 @@ h4 {
     cursor: pointer;
 }
 
+.no-result {
+    padding: 8px 17px 8px 17px;
+    align-items: center;
+    margin-top: 2px;
+    font-size: 14px;
+}
+
 .search_filters {
     display: flex;
     gap: 10px;
@@ -371,4 +383,20 @@ h4 {
 .quantity {
     color: #7A7A7A;
     font-weight: 400;
+}
+
+.no_recipe {
+    display: none;
+    width: 100%;
+    justify-content: center;
+}
+
+.search_name {
+    padding: 0px 2px;
+}
+
+.no_recipe_filter {
+    display: none;
+    width: 100%;
+    justify-content: center;
 }
