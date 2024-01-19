@@ -1,8 +1,7 @@
 import { recipeList } from "./index.js";
 import { recipesCreation } from "./index.js";
 import {filterCreation, recipeFiltered, nbRecipes, recipesSection, searchFilter, noRecipe, 
-    filtersFilter, dropDownFunction} from "./myLib.js"
-
+    filtersFilter, dropDownFunction, myMap} from "./myLib.js"
 const inputValidation = document.getElementById('search_area');
 const dropDown1 = document.querySelector(".ingredients_area");
 const dropDownIcon1 = document.getElementById("pull_down_1");
@@ -38,26 +37,48 @@ inputValidation.addEventListener('submit', (event) => {
 async function generateFilters() {
     //Ingredients list generation
     const ingredientFilterArea = document.querySelector(".ingredients_area");
-    const ingredient_list = new Set(recipeList.flatMap(recipe =>
-        recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()))
-    );
+    // const ingredient_list = new Set(recipeList.flatMap(recipe =>
+    //     recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()))
+    // );
+    let arrayIngredient1 = [];
+    let ingredient_list = [];
+    for(let i = 0; i < recipeList.length; i++) {
+        arrayIngredient1.push(recipeList[i].ingredients);
+    }
+
+    let arrayIngredient2 = arrayIngredient1.flat();
+    for(let i = 0; i < arrayIngredient2.length; i++) {
+        if(!ingredient_list.includes(arrayIngredient2[i].ingredient)) {
+            ingredient_list.push(arrayIngredient2[i].ingredient.toLowerCase());
+        }
+    }
 
     filterCreation(ingredientFilterArea, ingredient_list);
 
 
     // Ustensiles list generation
     const ustensilsFilterArea = document.querySelector(".ustensils_area");
-    const ustensil_list = new Set(recipeList.flatMap(recipe =>
-        recipe.ustensils.map(ustensil => ustensil.toLowerCase()))
-    );
+
+    let ustensil_list = [];
+    let arrayUstensils = []
+    for(let i = 0; i < recipeList.length; i++) {
+        arrayUstensils.push(recipeList[i].ustensils);
+    }
+    ustensil_list = arrayUstensils.flat();
+    ustensil_list = myMap(ustensil_list);
 
     filterCreation(ustensilsFilterArea, ustensil_list);
     
     // Appliance filter
     const applianceFilterArea = document.querySelector(".appliance_area");
-    const appliance_list = new Set(recipeList.flatMap(recipe =>
-        recipe.appliance)
-    );
+
+    let appliance_list = [];
+    let arrayAppliance = []
+    for(let i = 0; i < recipeList.length; i++) {
+        arrayAppliance.push(recipeList[i].appliance);
+    }
+    appliance_list = arrayAppliance.flat();
+    appliance_list = myMap(appliance_list);
 
     filterCreation(applianceFilterArea, appliance_list);
 }
@@ -69,40 +90,40 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // Ingredients filters
     const ingredientsArea = document.querySelectorAll(".ingredients");
 
-    ingredientsArea.forEach(function(ingredientsArea) {
-        const searchInput = ingredientsArea.querySelector(".ingredients_search");
-        const optionsContainer = ingredientsArea.querySelector(".ingredients_area");
-        const noResultMsg = ingredientsArea.querySelector(".no-result");
-        const options = ingredientsArea.querySelectorAll(".ingredients_option");
-        const clearBtn = ingredientsArea.querySelector(".clear");
+    for(let i = 0; i < ingredientsArea.length; i++) {
+        const searchInput = ingredientsArea[i].querySelector(".ingredients_search");
+        const optionsContainer = ingredientsArea[i].querySelector(".ingredients_area");
+        const noResultMsg = ingredientsArea[i].querySelector(".no-result");
+        const options = ingredientsArea[i].querySelectorAll(".ingredients_option");
+        const clearBtn = ingredientsArea[i].querySelector(".clear");
         filtersFilter(searchInput, optionsContainer, noResultMsg, options, clearBtn);
-    });
+    };
 
     // Appliance filters
     const applianceArea = document.querySelectorAll(".appareils");
 
-    applianceArea.forEach(function(applianceArea) {
-        const searchInput = applianceArea.querySelector(".appareils_search");
-        const optionsContainer = applianceArea.querySelector(".appliance_area");
-        const noResultMsg = applianceArea.querySelector(".no-result");
-        const options = applianceArea.querySelectorAll(".appliances_option");
-        const clearBtn = applianceArea.querySelector(".clear");
+    for(let i = 0; i < applianceArea.length; i++) {
+        const searchInput = applianceArea[i].querySelector(".appareils_search");
+        const optionsContainer = applianceArea[i].querySelector(".appliance_area");
+        const noResultMsg = applianceArea[i].querySelector(".no-result");
+        const options = applianceArea[i].querySelectorAll(".appliances_option");
+        const clearBtn = applianceArea[i].querySelector(".clear");
 
         filtersFilter(searchInput, optionsContainer, noResultMsg, options, clearBtn);
-    });
+    };
 
     // Ustensil filters
     const ustensilsArea = document.querySelectorAll(".ustensils");
 
-    ustensilsArea.forEach(function(ustensilsArea) {
-        const searchInput = ustensilsArea.querySelector(".ustensils_search");
-        const optionsContainer = ustensilsArea.querySelector(".ustensils_area");
-        const noResultMsg = ustensilsArea.querySelector(".no-result");
-        const options = ustensilsArea.querySelectorAll(".ustensils_option");
-        const clearBtn = ustensilsArea.querySelector(".clear");
+    for(let i = 0; i < ustensilsArea.length; i++) {
+        const searchInput = ustensilsArea[i].querySelector(".ustensils_search");
+        const optionsContainer = ustensilsArea[i].querySelector(".ustensils_area");
+        const noResultMsg = ustensilsArea[i].querySelector(".no-result");
+        const options = ustensilsArea[i].querySelectorAll(".ustensils_option");
+        const clearBtn = ustensilsArea[i].querySelector(".clear");
 
         filtersFilter(searchInput, optionsContainer, noResultMsg, options, clearBtn);
-    });
+    };
 });
 
 // Drop down menus

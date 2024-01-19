@@ -1,13 +1,13 @@
 import { recipeList } from "./index.js";
-const searchFilters = document.getElementById('search_filters');
-let tagArray = [];
-export let recipeFiltered = recipeList;
-const noRecipeFilter = document.querySelector('.no_recipe_filter');
 import { recipesCreation } from "./index.js";
+export let recipeFiltered = recipeList;
 export let nbRecipes = document.getElementById("nb_tot");
 export const recipesSection = document.querySelector("#recipes_area");
-let searchName = document.querySelector('.search_name');
 export const noRecipe = document.querySelector('.no_recipe');
+let searchName = document.querySelector('.search_name');
+const noRecipeFilter = document.querySelector('.no_recipe_filter');
+const searchFilters = document.getElementById('search_filters');
+let tagArray = [];
 
 export async function searchFilter(value) {
     let filteredCards = myFilter(recipeList, value);
@@ -38,23 +38,38 @@ function myFilter(myArray, value) {
     return newArray
 }
 
+export function myMap(myArray) {
+    let newArray = [];
+    for (let i = 0; i < myArray.length; i++) {
+        newArray[i] = myArray[i].toLowerCase();
+    }
+    return newArray;
+}
+
 // Tag filters
-async function updateRecipes() {
-    recipeFiltered = recipeList;
-    tagArray.forEach(value => {
-        const filteredCards = recipeFiltered.filter(recipe => {
-            var isInIngredients = recipe.ingredients.some(ingredient => 
-                ingredient.ingredient.toLowerCase().includes(value)
-            );
-            const results = [...recipe.ustensils];
-            const ustensils = results.map(element => {
-                return element.toLowerCase();
-                });
-            return (isInIngredients || recipe.appliance.toLowerCase().includes(value)
-                    || ustensils.includes(value));
+function tagFilter(myArray, value) {
+    let newArray = [];
+
+    for(let i = 0; i < myArray.length; i++) {
+        var isInIngredients = myArray[i].ingredients.some(function(ingredient) {
+            return ingredient.ingredient.toLowerCase().includes(value);
         });
+        const results = [...myArray[i].ustensils];
+        const ustensils = myMap(results);
+        if(ustensils.includes(value) || myArray[i].appliance.toLowerCase().includes(value) 
+            || isInIngredients) {
+            newArray.push(myArray[i]);
+        }
+    }
+    return newArray
+}
+
+async function updateRecipes() { 
+    recipeFiltered = recipeList;
+    for(let i = 0; i < tagArray.length; i++) {
+        const filteredCards = tagFilter(recipeFiltered, tagArray[i]);
         recipeFiltered = filteredCards;
-    });
+    }
     nbRecipes.innerText = recipeFiltered.length;
     recipesSection.innerHTML = '';
     recipesCreation(recipeFiltered);
@@ -91,7 +106,8 @@ async function removeTagToArray(tag) {
 }
 
 export function filterCreation(area, list) {
-    list.forEach(function(param) {
+    let newList = Array.from(list);
+    for(let i = 0; i < newList.length; i++) {
         const newTag = document.createElement('div');
 
         if(area.classList.contains('ingredients_area')) {
@@ -103,9 +119,8 @@ export function filterCreation(area, list) {
         else if(area.classList.contains('appliance_area')) {
             newTag.classList.add('appliances_option');
         }
-
-        newTag.innerText = param;
-        newTag.setAttribute('data-value', param);
+        newTag.innerText = newList[i];
+        newTag.setAttribute('data-value', newList[i]);
         area.appendChild(newTag);
 
         newTag.addEventListener("click", function() {
@@ -126,12 +141,11 @@ export function filterCreation(area, list) {
                 let filterTags = document.querySelectorAll(".filter_tag");
 
                 removeTagToArray(newTag.getAttribute('data-value'));
-
-                filterTags.forEach(function(tag) {
-                    if(tag.textContent == newTag.getAttribute("data-value")) {
-                        tag.remove();
+                for(let i = 0; i < filterTags.length; i++) {
+                    if(filterTags[i].textContent == newTag.getAttribute("data-value")) {
+                        filterTags[i].remove();
                     }
-                })
+                }
             }
 
             crossIcon.addEventListener('click', (event) => {
@@ -142,15 +156,15 @@ export function filterCreation(area, list) {
             });
 
         });
-    });
+    };
 }
 
 export function filtersFilter(searchInput, optionsContainer, noResultMsg, options, clearBtn) {
     clearBtn.addEventListener("click", function() {
         searchInput.value = "";
-        options.forEach(function(option) {
-            option.style.display = "block";
-        });
+        for(let i = 0; i < options.length; i++) {
+            options[i].style.display = "block";
+        };
         noResultMsg.style.display = "none";
         clearBtn.classList.add("hidden");
     });
@@ -162,11 +176,11 @@ export function filtersFilter(searchInput, optionsContainer, noResultMsg, option
             clearBtn.classList.add("hidden");
         }
         
-        options.forEach(function(option) {
-            const optionText = option.textContent.trim().toLocaleLowerCase();
+        for(let i = 0; i < options.length; i++) {
+            const optionText = options[i].textContent.trim().toLocaleLowerCase();
             const shouldShow = optionText.includes(searchTerm);
-            option.style.display = shouldShow ? "block" : "none";
-        });
+            options[i].style.display = shouldShow ? "block" : "none";
+        };
         const anyOptionMatch = Array.from(options).some(option => option.style.display
                                 === "block");
         noResultMsg.style.display = anyOptionMatch ? "none" : "block";
